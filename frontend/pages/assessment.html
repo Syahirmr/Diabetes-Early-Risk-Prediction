@@ -18,31 +18,35 @@
             <h3 class="text-2xl font-bold mb-6">Profil Dasar</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Usia (Tahun)</label>
-                    <input type="number" x-model="assessment.age" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-500" placeholder="Contoh: 45">
+                    <label for="age" class="block text-sm font-medium text-gray-700 mb-2">Usia (Tahun)</label>
+                    <input type="number" id="age" x-model="assessment.age" :aria-invalid="validationErrors.age ? 'true' : 'false'" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-500" placeholder="Contoh: 45">
+                    <p x-show="validationErrors.age" x-text="validationErrors.age" class="text-xs text-red-500 mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
-                    <select x-model="assessment.gender" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-200">
+                    <label for="gender" class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
+                    <select id="gender" x-model="assessment.gender" :aria-invalid="validationErrors.gender ? 'true' : 'false'" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-200">
                         <option value="">Pilih...</option>
                         <option value="Male">Laki-laki</option>
                         <option value="Female">Perempuan</option>
                         <option value="Other">Lainnya</option>
                     </select>
+                    <p x-show="validationErrors.gender" x-text="validationErrors.gender" class="text-xs text-red-500 mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">BMI (Body Mass Index)</label>
-                    <input type="number" step="0.1" x-model="assessment.bmi" class="w-full p-3 border rounded-lg" placeholder="Contoh: 24.5">
+                    <label for="bmi" class="block text-sm font-medium text-gray-700 mb-2">BMI (Body Mass Index)</label>
+                    <input type="number" step="0.1" id="bmi" x-model="assessment.bmi" :aria-invalid="validationErrors.bmi ? 'true' : 'false'" class="w-full p-3 border rounded-lg" placeholder="Contoh: 24.5">
+                    <p x-show="validationErrors.bmi" x-text="validationErrors.bmi" class="text-xs text-red-500 mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Status Merokok</label>
-                    <select x-model="assessment.smoking_history" class="w-full p-3 border rounded-lg">
+                    <label for="smoking_history" class="block text-sm font-medium text-gray-700 mb-2">Status Merokok</label>
+                    <select id="smoking_history" x-model="assessment.smoking_history" :aria-invalid="validationErrors.smoking_history ? 'true' : 'false'" class="w-full p-3 border rounded-lg">
                         <option value="">Pilih...</option>
                         <option value="never">Tidak Pernah</option>
                         <option value="current">Perokok Aktif</option>
                         <option value="former">Mantan Perokok</option>
                         <option value="No Info">Tidak Tahu / Lainnya</option>
                     </select>
+                    <p x-show="validationErrors.smoking_history" x-text="validationErrors.smoking_history" class="text-xs text-red-500 mt-1"></p>
                 </div>
             </div>
             <div class="mt-8 flex justify-end">
@@ -108,14 +112,16 @@
             <h3 class="text-2xl font-bold mb-6">Parameter Klinis</h3>
             <div class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Tingkat HbA1c (%)</label>
-                    <input type="number" step="0.1" x-model="assessment.hba1c_level" class="w-full p-3 border rounded-lg" placeholder="Contoh: 6.5">
+                    <label for="hba1c_level" class="block text-sm font-medium text-gray-700 mb-2">Tingkat HbA1c (%)</label>
+                    <input type="number" step="0.1" id="hba1c_level" x-model="assessment.hba1c_level" :aria-invalid="validationErrors.hba1c_level ? 'true' : 'false'" class="w-full p-3 border rounded-lg" placeholder="Contoh: 6.5">
                     <p class="text-xs text-gray-500 mt-1">Normal: &lt;5.7%</p>
+                    <p x-show="validationErrors.hba1c_level" x-text="validationErrors.hba1c_level" class="text-xs text-red-500 mt-1"></p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Gula Darah (mg/dL)</label>
-                    <input type="number" step="1" x-model="assessment.blood_glucose_level" class="w-full p-3 border rounded-lg" placeholder="Contoh: 120">
+                    <label for="blood_glucose_level" class="block text-sm font-medium text-gray-700 mb-2">Gula Darah (mg/dL)</label>
+                    <input type="number" step="1" id="blood_glucose_level" x-model="assessment.blood_glucose_level" :aria-invalid="validationErrors.blood_glucose_level ? 'true' : 'false'" class="w-full p-3 border rounded-lg" placeholder="Contoh: 120">
                     <p class="text-xs text-gray-500 mt-1">Gula Darah Puasa / Acak.</p>
+                    <p x-show="validationErrors.blood_glucose_level" x-text="validationErrors.blood_glucose_level" class="text-xs text-red-500 mt-1"></p>
                 </div>
             </div>
             <div class="mt-8 flex justify-between">

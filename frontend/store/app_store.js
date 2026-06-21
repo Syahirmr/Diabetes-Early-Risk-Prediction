@@ -9,6 +9,16 @@ export function appStore() {
         apiStatus: 'checking',
         loading: false,
         error: null,
+        validationErrors: {
+            age: '',
+            gender: '',
+            bmi: '',
+            hypertension: '',
+            heart_disease: '',
+            smoking_history: '',
+            hba1c_level: '',
+            blood_glucose_level: ''
+        },
         
         assessment: {
             age: '',
@@ -24,6 +34,7 @@ export function appStore() {
         resultData: null,
         explainData: null,
         explainLoading: false,
+        explainError: false,
         
         pages: {
             landing: landingHtml,
@@ -98,6 +109,7 @@ export function appStore() {
             this.loading = true;
             this.error = null;
             this.explainData = null; // reset explanation
+            this.explainError = false; // reset explain error
             
             const payload = {
                 age: Number(this.assessment.age),
@@ -114,7 +126,19 @@ export function appStore() {
                 this.resultData = await window.apiClient.predict(payload);
                 this.goTo('result');
             } catch(e) {
-                if(e.message !== 'Request dibatalkan.') {
+                if(e.isValidation) {
+                    this.error = "Masukkan data yang valid.";
+                    let newErrors = {
+                        age: '', gender: '', bmi: '', hypertension: '', heart_disease: '', smoking_history: '', hba1c_level: '', blood_glucose_level: ''
+                    };
+                    if(e.details && Array.isArray(e.details)) {
+                        e.details.forEach(err => {
+                            const field = err.loc[err.loc.length - 1];
+                            newErrors[field] = "Periksa kembali nilai yang Anda masukkan.";
+                        });
+                    }
+                    this.validationErrors = newErrors;
+                } else if(e.message !== 'Request dibatalkan.') {
                     this.error = e.message;
                 }
             } finally {
@@ -125,6 +149,8 @@ export function appStore() {
         async loadExplain() {
             if (this.explainData || this.explainLoading) return;
             this.explainLoading = true;
+            this.explainError = false;
+            this.explainData = null;
             const payload = {
                 age: Number(this.assessment.age),
                 gender: this.assessment.gender,
@@ -138,9 +164,10 @@ export function appStore() {
             try {
                 this.explainData = await window.apiClient.explain(payload);
             } catch(e) {
-                if(e.message !== 'Request dibatalkan.') {
-                    this.error = "Gagal memuat explainability: " + e.message;
-                }
+                // Graceful degradation: do not show toast error for explain fail
+                this.explainError = true;
+                this.explainData = null;
+                console.warn("Explainability failed to load:", e);
             } finally {
                 this.explainLoading = false;
             }

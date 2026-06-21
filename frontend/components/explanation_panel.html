@@ -10,6 +10,10 @@
         <div class="h-4 bg-gray-200 rounded w-1/2"></div>
         <div class="h-4 bg-gray-200 rounded w-5/6"></div>
     </div>
+    <!-- Error Fallback -->
+    <div x-show="explainError" x-cloak class="p-4 bg-gray-50 border rounded-lg text-center mt-4">
+        <p class="text-sm italic text-gray-500">Detail analisis spesifik tidak dapat dimuat untuk saat ini. Hasil ringkasan di atas tetap valid.</p>
+    </div>
 
     <!-- Content -->
     <div x-show="!explainLoading && explainData" class="space-y-4">

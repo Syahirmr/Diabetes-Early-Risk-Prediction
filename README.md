@@ -86,27 +86,37 @@ python scripts/phase2_pipeline.py
 
 ## 💻 Menjalankan Aplikasi
 
-Aplikasi berjalan pada arsitektur terpisah untuk *development* (Frontend di port 3000, Backend di port 8000).
+Aplikasi ini kini telah dikemas dalam kontainer Docker untuk menjamin kemudahan deployment dan stabilitas di lingkungan *production*. Anda memiliki dua opsi untuk menjalankannya:
 
-### 1. Jalankan FastAPI Backend
-```bash
-uvicorn backend.main:app --reload
-```
-- API Endpoint: `http://localhost:8000/api/v1/predict`
-- Swagger UI (Dokumentasi API): `http://localhost:8000/docs`
+### OPSI 1: Menggunakan Docker Compose (Rekomendasi Utama)
+Cara paling cepat dan aman untuk menjalankan sistem secara keseluruhan (Frontend Nginx & Backend FastAPI) persis seperti arsitektur *production*.
 
-### 2. Jalankan Vite Frontend Server
-Buka terminal baru, dan pastikan berada di folder project:
-```bash
-npm run dev
-```
-- UI Platform siap diakses di: **`http://localhost:3000`**
+1. Pastikan Docker Desktop telah terinstal dan menyala.
+2. Pastikan Anda telah men-generate *model artifacts* (langkah 3 di atas) sehingga folder `models/` terisi.
+3. Jalankan perintah kompilasi dan orkestrasi otomatis:
+   ```bash
+   docker-compose up --build
+   ```
+4. Akses aplikasi:
+   - **Frontend UI:** `http://localhost:3000`
+   - **Backend API & Docs:** `http://localhost:8000/docs`
 
-### 3. Production Build (Opsional)
-Untuk mengemas frontend dan langsung mengintegrasikannya dengan kode statik:
-```bash
-npm run build
-```
+### OPSI 2: Development Mode (Tanpa Docker)
+Gunakan opsi ini jika Anda ingin melakukan *live-editing* (Hot-Reload) untuk keperluan *development*.
+
+1. **Jalankan FastAPI Backend**
+   ```bash
+   uvicorn backend.main:app --port 8000 --reload
+   ```
+   - API Endpoint: `http://localhost:8000/api/v1/predict`
+   - Swagger UI: `http://localhost:8000/docs`
+
+2. **Jalankan Vite Frontend Server**
+   Buka terminal baru, dan pastikan berada di folder project:
+   ```bash
+   npm run dev
+   ```
+   - UI Platform siap diakses di: **`http://localhost:3000`**
 
 ---
 

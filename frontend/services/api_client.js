@@ -4,7 +4,7 @@ const API_BASE = '/api/v1'; // use relative if proxied or absolute
 const activeControllers = new Map();
 
 async function fetchWithRetry(url, options = {}, retries = 1, requestKey = null) {
-    const timeout = 5000;
+    const timeout = 3000;
     
     // Abort previous request if same key
     if (requestKey) {
@@ -33,8 +33,13 @@ async function fetchWithRetry(url, options = {}, retries = 1, requestKey = null)
             if (!res.ok) {
                 const errData = await res.json().catch(()=>({}));
                 if (res.status === 422) {
-                    const err = new Error("Validasi data gagal: " + JSON.stringify(errData));
+                    const err = new Error("Validation Error");
                     err.isValidation = true;
+                    err.details = errData.detail;
+                    throw err;
+                } else if (res.status >= 500) {
+                    const err = new Error("Kami belum bisa memproses sekarang.");
+                    err.isServerError = true;
                     throw err;
                 }
                 throw new Error(errData.detail || `HTTP Error ${res.status}`);
@@ -44,9 +49,12 @@ async function fetchWithRetry(url, options = {}, retries = 1, requestKey = null)
         } catch (err) {
             if (timerId) clearTimeout(timerId);
             
-            if (err.name === 'AbortError' && !options.signal?.aborted) {
-                // Ignore intentional aborts by user, only retry timeouts
-                throw new Error('Request dibatalkan.');
+            if (err.name === 'AbortError') {
+                throw new Error('Periksa koneksi Anda.');
+            }
+            
+            if (err.message === 'Failed to fetch') {
+                throw new Error('Kami belum bisa memproses sekarang.');
             }
             
             if (err.isValidation || i === retries) throw err;

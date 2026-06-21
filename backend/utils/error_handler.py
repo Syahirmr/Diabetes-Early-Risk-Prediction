@@ -8,7 +8,7 @@ def add_exception_handlers(app):
     async def validation_exception_handler(request: Request, exc: RequestValidationError):
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            content={"error": {"code": "VALIDATION_ERROR", "message": "Input tidak valid sesuai kontrak data."}}
+            content={"error": {"code": "VALIDATION_ERROR", "message": "Input tidak valid sesuai kontrak data."}, "detail": exc.errors()}
         )
 
     @app.exception_handler(StarletteHTTPException)

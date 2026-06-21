@@ -6,9 +6,14 @@ from backend.startup.load_artifacts import load_all_artifacts
 from backend.utils.error_handler import add_exception_handlers
 from contextlib import asynccontextmanager
 
+import logging
+
+logger = logging.getLogger("uvicorn.info")
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     load_all_artifacts()
+    logger.info("Artifacts ML berhasil dimuat ke memori (Singleton Scope)")
     yield
 
 app = FastAPI(
