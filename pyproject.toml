@@ -1,0 +1,14 @@
+[project]
+name = "diabetes-prediction"
+version = "0.1.0"
+description = "Diabetes Early Risk Prediction Platform"
+
+[tool.ruff]
+line-length = 88
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true

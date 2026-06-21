@@ -1,0 +1,133 @@
+<div class="max-w-3xl mx-auto" x-data="{ formStep: 1 }">
+    <!-- Progress Bar -->
+    <div class="mb-8">
+        <div class="flex justify-between text-sm font-medium text-gray-500 mb-2">
+            <span :class="formStep >= 1 ? 'text-blue-600' : ''">Profil Dasar</span>
+            <span :class="formStep >= 2 ? 'text-blue-600' : ''">Riwayat Penyakit</span>
+            <span :class="formStep >= 3 ? 'text-blue-600' : ''">Klinis</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" :style="`width: ${(formStep/3)*100}%`"></div>
+        </div>
+    </div>
+
+    <div class="bg-white shadow-lg rounded-2xl p-8 border">
+        
+        <!-- Step 1 -->
+        <div x-show="formStep === 1">
+            <h3 class="text-2xl font-bold mb-6">Profil Dasar</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Usia (Tahun)</label>
+                    <input type="number" x-model="assessment.age" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-500" placeholder="Contoh: 45">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Kelamin</label>
+                    <select x-model="assessment.gender" class="w-full p-3 border rounded-lg focus:ring focus:ring-blue-200">
+                        <option value="">Pilih...</option>
+                        <option value="Male">Laki-laki</option>
+                        <option value="Female">Perempuan</option>
+                        <option value="Other">Lainnya</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">BMI (Body Mass Index)</label>
+                    <input type="number" step="0.1" x-model="assessment.bmi" class="w-full p-3 border rounded-lg" placeholder="Contoh: 24.5">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status Merokok</label>
+                    <select x-model="assessment.smoking_history" class="w-full p-3 border rounded-lg">
+                        <option value="">Pilih...</option>
+                        <option value="never">Tidak Pernah</option>
+                        <option value="current">Perokok Aktif</option>
+                        <option value="former">Mantan Perokok</option>
+                        <option value="No Info">Tidak Tahu / Lainnya</option>
+                    </select>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-end">
+                <button @click="if(assessment.age && assessment.gender && assessment.bmi && assessment.smoking_history) formStep = 2" 
+                        :disabled="!(assessment.age && assessment.gender && assessment.bmi && assessment.smoking_history)"
+                        class="bg-blue-600 disabled:bg-gray-300 text-white px-8 py-3 rounded-lg font-medium transition">Selanjutnya</button>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div x-show="formStep === 2" x-cloak>
+            <h3 class="text-2xl font-bold mb-6">Riwayat Penyakit</h3>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Riwayat Hipertensi?</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 p-4 border rounded-lg flex-1 cursor-pointer" :class="assessment.hypertension === '1' ? 'border-blue-500 bg-blue-50' : ''">
+                            <input type="radio" name="hyp" value="1" x-model="assessment.hypertension" class="hidden">
+                            <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" :class="assessment.hypertension === '1' ? 'border-blue-500' : 'border-gray-300'">
+                                <div class="w-3 h-3 rounded-full bg-blue-500" x-show="assessment.hypertension === '1'"></div>
+                            </div>
+                            <span>Ya</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-4 border rounded-lg flex-1 cursor-pointer" :class="assessment.hypertension === '0' ? 'border-blue-500 bg-blue-50' : ''">
+                            <input type="radio" name="hyp" value="0" x-model="assessment.hypertension" class="hidden">
+                            <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" :class="assessment.hypertension === '0' ? 'border-blue-500' : 'border-gray-300'">
+                                <div class="w-3 h-3 rounded-full bg-blue-500" x-show="assessment.hypertension === '0'"></div>
+                            </div>
+                            <span>Tidak</span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Riwayat Penyakit Jantung?</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 p-4 border rounded-lg flex-1 cursor-pointer" :class="assessment.heart_disease === '1' ? 'border-blue-500 bg-blue-50' : ''">
+                            <input type="radio" name="hd" value="1" x-model="assessment.heart_disease" class="hidden">
+                            <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" :class="assessment.heart_disease === '1' ? 'border-blue-500' : 'border-gray-300'">
+                                <div class="w-3 h-3 rounded-full bg-blue-500" x-show="assessment.heart_disease === '1'"></div>
+                            </div>
+                            <span>Ya</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-4 border rounded-lg flex-1 cursor-pointer" :class="assessment.heart_disease === '0' ? 'border-blue-500 bg-blue-50' : ''">
+                            <input type="radio" name="hd" value="0" x-model="assessment.heart_disease" class="hidden">
+                            <div class="w-5 h-5 rounded-full border-2 flex items-center justify-center" :class="assessment.heart_disease === '0' ? 'border-blue-500' : 'border-gray-300'">
+                                <div class="w-3 h-3 rounded-full bg-blue-500" x-show="assessment.heart_disease === '0'"></div>
+                            </div>
+                            <span>Tidak</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-between">
+                <button @click="formStep = 1" class="text-gray-600 px-6 py-3 hover:bg-gray-100 rounded-lg transition">Kembali</button>
+                <button @click="if(assessment.hypertension !== '' && assessment.heart_disease !== '') formStep = 3" 
+                        :disabled="assessment.hypertension === '' || assessment.heart_disease === ''"
+                        class="bg-blue-600 disabled:bg-gray-300 text-white px-8 py-3 rounded-lg font-medium transition">Selanjutnya</button>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div x-show="formStep === 3" x-cloak>
+            <h3 class="text-2xl font-bold mb-6">Parameter Klinis</h3>
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Tingkat HbA1c (%)</label>
+                    <input type="number" step="0.1" x-model="assessment.hba1c_level" class="w-full p-3 border rounded-lg" placeholder="Contoh: 6.5">
+                    <p class="text-xs text-gray-500 mt-1">Normal: &lt;5.7%</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Gula Darah (mg/dL)</label>
+                    <input type="number" step="1" x-model="assessment.blood_glucose_level" class="w-full p-3 border rounded-lg" placeholder="Contoh: 120">
+                    <p class="text-xs text-gray-500 mt-1">Gula Darah Puasa / Acak.</p>
+                </div>
+            </div>
+            <div class="mt-8 flex justify-between">
+                <button @click="formStep = 2" class="text-gray-600 px-6 py-3 hover:bg-gray-100 rounded-lg transition">Kembali</button>
+                <button @click="submitAssessment()" 
+                        :disabled="!(assessment.hba1c_level && assessment.blood_glucose_level) || loading"
+                        class="bg-green-600 disabled:bg-gray-300 text-white px-8 py-3 rounded-lg font-medium transition flex items-center gap-2">
+                    <span x-show="!loading">Lihat Hasil Risiko</span>
+                    <span x-show="loading" class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

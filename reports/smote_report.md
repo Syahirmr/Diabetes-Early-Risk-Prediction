@@ -1,0 +1,6 @@
+# SMOTE Report
+- Ratio Before: {0: 0.9122638071937952, 1: 0.08773619280620477}
+- Ratio After: {0: 0.6666666666666666, 1: 0.3333333333333333}
+- Rows Before: 76844
+- Rows After: 105153
+- Rows Added: 28309

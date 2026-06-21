@@ -1,0 +1,48 @@
+# Environments
+.venv/
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+
+# Node & Frontend Build
+node_modules/
+dist/
+.vite/
+
+# Playwright & Tests
+playwright-report/
+test-results/
+.playwright/
+.coverage
+htmlcov/
+
+# Local Data & Datasets (Tidak dipush ke GitHub)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Machine Learning Artifacts (Tidak dipush, cukup kode trainnya saja)
+models/artifacts/*
+!models/artifacts/.gitkeep
+*.pkl
+
+# Laporan lokal (Opsional: abaikan screenshot otomatis Playwright jika ada)
+reports/screenshot_*.png
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

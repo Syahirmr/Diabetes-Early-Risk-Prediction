@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetes Early Risk Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="/main.js"></script>
+    <style>
+        [x-cloak] { display: none !important; }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col antialiased">
+    <div x-data="appStore" class="flex-grow flex flex-col">
+        <!-- Toast Error -->
+        <div x-show="error" x-cloak class="fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded z-50">
+            <span class="block sm:inline" x-text="error"></span>
+            <button @click="error = null" class="absolute top-0 bottom-0 right-0 px-4 py-3">&times;</button>
+        </div>
+        
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+                <h1 class="text-xl font-bold text-blue-600 flex items-center gap-2 cursor-pointer" @click="goTo('landing')">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8.7 13.3a1 1 0 01-1.4 0l-2-2a1 1 0 111.4-1.4l1.3 1.3 4.3-4.3a1 1 0 111.4 1.4l-5 5z"/></svg>
+                    Diabetes Risk Platform
+                </h1>
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="w-3 h-3 rounded-full" :class="apiStatus === 'ok' ? 'bg-green-500' : (apiStatus === 'error' ? 'bg-red-500' : 'bg-yellow-500')"></span>
+                    <span x-text="apiStatus === 'ok' ? 'System Online' : (apiStatus === 'error' ? 'System Offline' : 'Connecting...')" class="text-gray-500"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Pages Router -->
+        <main class="flex-grow max-w-5xl mx-auto w-full p-4 sm:p-6">
+            <template x-if="step === 'landing'">
+                <div x-html="pages.landing"></div>
+            </template>
+            <template x-if="step === 'assessment'">
+                <div x-html="pages.assessment"></div>
+            </template>
+            <template x-if="step === 'result'">
+                <div x-html="pages.result"></div>
+            </template>
+            <template x-if="!['landing', 'assessment', 'result'].includes(step)">
+                <div class="text-center py-20">
+                    <h2 class="text-2xl font-bold text-gray-800">Halaman Tidak Ditemukan</h2>
+                    <p class="text-gray-500 mt-2">Maaf, halaman yang Anda cari tidak tersedia atau terjadi kesalahan rendering.</p>
+                    <button @click="goTo('landing')" class="mt-6 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">Kembali ke Beranda</button>
+                </div>
+            </template>
+        </main>
+        
+        <footer class="bg-gray-100 border-t py-6 text-center text-gray-500 text-sm mt-auto print:hidden">
+            <p>&copy; 2026 Diabetes Early Risk Prediction Platform. Bukan alat diagnostik medis.</p>
+        </footer>
+    </div>
+</body>
+</html>
