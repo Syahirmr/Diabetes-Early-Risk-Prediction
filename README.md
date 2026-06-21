@@ -66,6 +66,22 @@ python scripts/phase2_pipeline.py
 ```
 *(Script ini akan memproses dataset, melatih Random Forest, men-generate explainer, dan menaruh seluruh model ke folder `models/artifacts/`)*.
 
+> [!NOTE]
+> **Catatan Teknis Terkait Metadata (JSON):**
+> Jika Anda hanya menjalankan `scripts/phase2_pipeline.py`, model yang terbentuk akan **100% identik secara matematis** (karena penggunaan *seed/random_state* yang ketat). Namun, file `metadata.json` yang tercipta adalah versi standar yang belum melalui tahap optimasi (Phase 2.5 - 2.7).
+> 
+> **Apakah Backend akan Crash?** **TIDAK**. Sistem sudah dilengkapi dengan *fallback mechanism*. Jika *metadata* tidak memiliki field `decision_threshold`, maka backend akan otomatis mematok nilai *default* `0.40`. 
+> 
+> **Saran Opsional (Untuk Presisi 100%):** 
+> Jika Anda menginginkan status *metadata* yang presisi hingga ke sela-sela *field json*-nya (*threshold*, *feature order*, dll), Anda bisa menjalankan *pipeline patch* secara berurutan:
+> ```bash
+> python scripts/phase2_pipeline.py
+> python scripts/phase2_5_pipeline.py
+> python scripts/phase2_6_pipeline.py
+> python scripts/phase2_7_pipeline.py
+> ```
+> *(Namun untuk sekadar menjalankan sistem dan demonstrasi UI, menjalankan `phase2_pipeline.py` saja sudah sangat cukup).*
+
 ---
 
 ## 💻 Menjalankan Aplikasi
