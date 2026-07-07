@@ -7,10 +7,6 @@ def run_pipeline(request: PredictRequest):
     data = request.model_dump()
     df = pd.DataFrame([data])
     
-    # Reorder according to metadata
-    feature_order = ArtifactStore.metadata.get('feature_order', df.columns.tolist())
-    df = df[feature_order]
-    
     encoder = ArtifactStore.encoder
     
     # Apply encoding
@@ -19,6 +15,10 @@ def run_pipeline(request: PredictRequest):
     smoking_test = encoder['smoking_ohe'].transform(df[['smoking_history']])
     smoking_test_df = pd.DataFrame(smoking_test, columns=encoder['smoking_cols'], index=df.index)
     df = pd.concat([df.drop(columns=['smoking_history']), smoking_test_df], axis=1)
+    
+    # Reorder according to metadata
+    feature_order = ArtifactStore.metadata.get('features', df.columns.tolist())
+    df = df[feature_order]
     
     # Predict
     prob = ArtifactStore.model.predict_proba(df)[:, 1][0]

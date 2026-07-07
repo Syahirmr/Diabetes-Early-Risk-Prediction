@@ -1,4 +1,7 @@
 const API_BASE = '/api/v1'; // use relative if proxied or absolute
+const API_HOST = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://localhost:8000' 
+    : ''; // if deployed, use relative path
 
 // Maintain active abort controllers
 const activeControllers = new Map();
@@ -64,16 +67,16 @@ async function fetchWithRetry(url, options = {}, retries = 1, requestKey = null)
 }
 
 window.apiClient = {
-    health: () => fetchWithRetry(`http://localhost:8000${API_BASE}/health`),
-    predict: (data) => fetchWithRetry(`http://localhost:8000${API_BASE}/predict`, {
+    health: () => fetchWithRetry(`${API_HOST}${API_BASE}/health`),
+    predict: (data) => fetchWithRetry(`${API_HOST}${API_BASE}/predict`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     }, 1, 'predict'),
-    explain: (data) => fetchWithRetry(`http://localhost:8000${API_BASE}/explain`, {
+    explain: (data) => fetchWithRetry(`${API_HOST}${API_BASE}/explain`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
     }, 1, 'explain'),
-    metadata: () => fetchWithRetry(`http://localhost:8000${API_BASE}/metadata`)
+    metadata: () => fetchWithRetry(`${API_HOST}${API_BASE}/metadata`)
 };

@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     APP_ENV: str = "development"
@@ -6,7 +6,6 @@ class Settings(BaseSettings):
     MODEL_PATH: str = "models/artifacts"
     ALLOWED_ORIGINS: str = "http://localhost:3000"
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env")
 
 settings = Settings()
