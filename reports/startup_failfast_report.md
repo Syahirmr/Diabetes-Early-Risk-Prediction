@@ -4,7 +4,7 @@
 - **Startup Log Output**:
 ```text
 Failed to load ML artifacts: [Errno 2] No such file or directory: 'D:\\SEMESTER 6\\Pembelajaran Mesin\\UAS\\UAS_MachineLearning_Diabetes\\models\\artifacts\\model.pkl'
-INFO:     Started server process [30664]
+INFO:     Started server process [1932]
 INFO:     Waiting for application startup.
 ERROR:    Traceback (most recent call last):
   File "D:\SEMESTER 6\Pembelajaran Mesin\UAS\UAS_MachineLearning_Diabetes\backend\startup\load_artifacts.py", line 20, in load_all_artifacts
@@ -30,7 +30,7 @@ Traceback (most recent call last):
   File "C:\Python314\Lib\contextlib.py", line 214, in __aenter__
     return await anext(self.gen)
            ^^^^^^^^^^^^^^^^^^^^^
-  File "D:\SEMESTER 6\Pembelajaran Mesin\UAS\UAS_MachineLearning_Diabetes\backend\main.py", line 11, in lifespan
+  File "D:\SEMESTER 6\Pembelajaran Mesin\UAS\UAS_MachineLearning_Diabetes\backend\main.py", line 15, in lifespan
     load_all_artifacts()
     ~~~~~~~~~~~~~~~~~~^^
   File "D:\SEMESTER 6\Pembelajaran Mesin\UAS\UAS_MachineLearning_Diabetes\backend\startup\load_artifacts.py", line 33, in load_all_artifacts

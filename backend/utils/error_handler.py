@@ -7,7 +7,7 @@ def add_exception_handlers(app):
     @app.exception_handler(RequestValidationError)
     async def validation_exception_handler(request: Request, exc: RequestValidationError):
         return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             content={"error": {"code": "VALIDATION_ERROR", "message": "Input tidak valid sesuai kontrak data."}, "detail": exc.errors()}
         )
 

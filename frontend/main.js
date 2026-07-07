@@ -1,5 +1,6 @@
 import Alpine from 'https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/module.esm.js';
 import collapse from 'https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/module.esm.js';
+import './index.css';
 import './services/api_client.js';
 import { appStore } from './store/app_store.js';
 

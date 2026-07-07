@@ -27,6 +27,7 @@ htmlcov/
 # Local Data & Datasets (Tidak dipush ke GitHub)
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/*.csv
 data/processed/*
 !data/processed/.gitkeep
 
