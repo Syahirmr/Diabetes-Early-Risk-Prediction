@@ -58,9 +58,9 @@ npm install
 ```
 
 ### 3. Generate ML Artifacts (WAJIB DILAKUKAN) ⚠️
-Jika langkah ini dilewati, backend server **akan langsung crash (Fail-Fast)** karena tidak menemukan file model. Siapkan `data/diabetes_dataset_with_notes.csv` (hubungi *author* untuk dataset) atau jalankan pipeline menggunakan dataset lokal Anda.
+Jika langkah ini dilewati, backend server **akan langsung crash (Fail-Fast)** karena tidak menemukan file model. Dataset sudah disertakan secara langsung di dalam repositori ini pada folder `data/raw/diabetes_dataset_with_notes.csv`.
 
-Jika data lokal sudah tersedia di direktori, bangun ulang *model artifact* `.pkl` dengan cara:
+Bangun ulang *model artifact* `.pkl` dengan cara:
 ```bash
 python scripts/phase2_pipeline.py
 ```
@@ -114,6 +114,9 @@ Gunakan opsi ini jika Anda ingin melakukan *live-editing* (Hot-Reload) untuk kep
 2. **Jalankan Vite Frontend Server**
    Buka terminal baru, dan pastikan berada di folder project:
    ```bash
+   # (Opsional) Compile CSS & Assets jika baru melakukan clone
+   npm run build
+
    npm run dev
    ```
    - UI Platform siap diakses di: **`http://localhost:3000`**
@@ -133,6 +136,7 @@ ruff check .
 mypy backend
 
 # Run UI E2E Test Browser (Playwright)
+npx playwright install
 npx playwright test
 # Atau jalankan script orkestrasi otomatis kami:
 python scripts/run_e2e.py
