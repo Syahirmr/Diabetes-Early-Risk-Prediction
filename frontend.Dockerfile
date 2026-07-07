@@ -11,6 +11,7 @@ RUN npm install
 
 # Copy frontend source code
 COPY frontend/ ./frontend/
+COPY tailwind.config.js postcss.config.js ./
 
 # Build static assets (Tailwind & Alpine) using Vite
 RUN npx vite build frontend
